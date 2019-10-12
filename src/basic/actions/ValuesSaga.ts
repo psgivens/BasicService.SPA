@@ -1,7 +1,9 @@
 import { select, takeEvery } from 'redux-saga/effects'
 import { call, put } from 'redux-saga/effects'
-import * as reducers from '/'
-// import { valuesApi } from '../apis/valuesApi'
+import * as reducers from 'src/core/reducers'
+import { valuesApi } from '../apis/valuesApi'
+import * as infra from 'src/infra'
+import { AuthenticationState } from 'src/infra/authenticationReducers'
 
 export type ValuesCommand = {
     type: "VALUES_DUMMY"
@@ -36,9 +38,8 @@ export class ValuesSaga {
 
     public *getValues(action: ValuesCommand){
 
-        const getAuthnToken = (state:reducers.All): string => state.auth ? state.auth.token : ""
-        const token:string = yield select(getAuthnToken)
-        const values = yield call(valuesApi.getValues, token)
+        const authState:AuthenticationState = yield select(infra.authSagaQuery)
+        const values = yield call(valuesApi.getValues, authState)
 
         // tslint:disable-next-line:no-console
         console.log(values)

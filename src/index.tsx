@@ -7,18 +7,17 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import { applyMiddleware, createStore, Store as ReduxStore } from 'redux'
-import { reducers } from './basic/reducers'
-import * as state from './basic/reducers'
-import { CounterSaga } from './basic/actions/CounterSaga'
-
-const initialState = { 
-  counter: 0
-}
+import { reducers } from 'src/core/reducers'
+import * as state from 'src/core/reducers'
+import { CounterSaga } from 'src/basic/actions/CounterSaga'
+import { PingSaga } from 'src/basic/actions/PingSaga'
 
 const sagaMiddleware = createSagaMiddleware()
-const store: ReduxStore<state.All> = createStore(reducers, initialState, applyMiddleware(sagaMiddleware))
+const store: ReduxStore<state.All> = createStore(reducers, state.initialState, applyMiddleware(sagaMiddleware))
 const counterSaga = new CounterSaga()
 sagaMiddleware.run(counterSaga.saga)
+const pingSaga = new PingSaga()
+sagaMiddleware.run(pingSaga.saga)
 
 // Replaced: ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(

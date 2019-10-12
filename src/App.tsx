@@ -30,11 +30,19 @@ const App: React.FC<ThisProps> = ( props:ThisProps) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn Reacts {props.counter!}
+          Learn Reacts {props.counter!}          
         </a>
+        <p>
+          {props.pingResult!.date.toString()}
+        </p>
+        <p>
+          {props.pingResult!.values.toString()}
+        </p>
+
       </header>
       button:
       <button onClick={onButtonPress(props.incrementCounter!)} >click me!</button>
+      <button onClick={onButtonPress(props.ping!)} >click me!</button>
     </div>
   );
 }
