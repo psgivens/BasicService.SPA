@@ -41,8 +41,9 @@ const App: React.FC<ThisProps> = ( props:ThisProps) => {
 
       </header>
       button:
-      <button onClick={onButtonPress(props.incrementCounter!)} >click me!</button>
-      <button onClick={onButtonPress(props.ping!)} >click me!</button>
+      <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
+      <button onClick={onButtonPress(props.ping!)} >Ping!</button>
+      <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
     </div>
   );
 }

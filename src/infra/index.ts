@@ -36,6 +36,10 @@ export const unauthFetch = (url:string) => (): Promise<Response> => {
             // "Authorization": 'Bearer ' + authState.token,
             "Content-Type": "application/json; charset=utf-8",
             // "Content-Type": "application/x-www-form-urlencoded",
+
+            // TODO: Get and set this dynamically through authFetch
+            "user_id": "e727c9b6-5498-405c-aafc-bf8d8e8fb61d",
+            "transaction_id": "5047e2e0-2f03-46b4-82a0-216e180dea4f"
         },
         method: "GET", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin

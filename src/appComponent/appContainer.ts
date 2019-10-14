@@ -15,6 +15,7 @@ export type StateProps = {} & {
 }
   
 export type ConnectedDispatch = {} & {
+    authCheck?: () => void
     incrementCounter?:() => void
     ping?: () => void
 }
@@ -32,6 +33,7 @@ const mapStateToProps = (state1: state.All, ownProps: AttributeProps): StateProp
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<CounterCommand | PingCommand>): ConnectedDispatch => {
     return {
+        authCheck: () => dispatch(PingCommands.authCheck()),
         incrementCounter: () => dispatch(CounterCommands.incrementCounter()),
         ping: () => dispatch(PingCommands.ping())
     }
