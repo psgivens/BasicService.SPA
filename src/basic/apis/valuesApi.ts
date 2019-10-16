@@ -1,6 +1,6 @@
 
-import * as infra from 'src/infra'
-import { AuthenticationState } from 'src/infra/authenticationReducers'
+import * as infra from 'src/shell/js'
+import { AuthenticationState } from 'src/shell/js/authenticationReducers'
 
 
 export type ValuesApi = {} & {

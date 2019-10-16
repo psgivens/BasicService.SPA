@@ -1,0 +1,121 @@
+
+
+
+html, body {
+  overflow: hidden;
+}
+
+html,body,#root { height:100%; }
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  height: 150px;
+  padding: 20px;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.box {
+  width: 600px;
+  margin: 10px 10px 10px 10px;
+}
+
+#authenticated {  
+  position: absolute;
+  top: 52px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+
+#sidebar {
+  width: 300px; 
+  overflow: auto;
+  padding: 20px;
+  vertical-align: top;
+}
+
+.blade-body {
+  overflow: auto;
+}
+
+.blade-body.pomodoros {
+  position: absolute;
+  top: 35px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+}
+
+#root {
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+#statusbar {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 35px;
+}
+
+.pomodoro-items {
+  width: 100%;
+  display: block;
+}
+
+.list-item {
+  padding: 0px 5px 10px 5px;
+}
+
+#sidebar, .blade {
+  position: absolute;
+  top: 0px;
+  bottom: 0px; }
+
+.appcontent {
+  position: absolute;
+  top: 0px;
+  bottom: 35px; 
+  left: 301px;
+  right: 0px;
+}
+
+
+.blade.listings {  
+  width: 400px;
+  left: 0px;
+}
+
+.blade.details {
+  overflow: auto;
+  left: 400px;
+  right: 0px;  
+}
+
+.blade.full {
+  overflow: auto;
+  left: 0px;
+  right: 0px;  
+}
+
+.menu-list {
+  line-height: 1.25; }
+.menu-list a {
+  display: block;
+  padding: 0.5em 0.75em; }
+.menu-list li ul {
+  margin: 0.75em;
+  padding-left: 0.75em; }
+

@@ -1,0 +1,89 @@
+
+
+// Top and bottom bars
+$bar-background: #773300ff;
+$bar-foreground: #ffffffff;
+
+// Graphic fills such as pomodoro timer arc
+$graphic-fill: #dd4433ff;
+
+// Navigation menu is the menu on the top
+$nav-hover: #dd4433ff;
+
+// 'Menu' is the left, authenticated menu
+$menu-active-bg: #e17023ff;
+$menu-active-fg: #ffffffff;
+$menu-hover: #dd4433ff;
+$menu-panel-bg: #cc9955ff;
+$menu-panel-fg: #000000ff;
+
+
+
+.App-header {
+  color: $bar-foreground;
+}
+
+#sidebar {
+  background-color: $menu-panel-bg
+}
+
+#statusbar {
+  background: $bar-background; 
+  color: $bar-foreground;
+}
+
+.pomodoro-arc {
+  fill: $graphic-fill;
+}
+
+
+.blade-title {
+  background: $menu-panel-bg;
+  color: $menu-panel-fg;
+}
+
+.list-item {
+  border: solid 1px lightgray;
+}
+
+.blade {
+  border: solid 1px black;  
+}
+
+.navbar {
+  background: $bar-background; 
+}
+
+a.navbar-item {
+  color: $bar-foreground;
+}
+a.navbar-item:hover{
+  color: $nav-hover;
+}
+
+
+.menu-list a {
+  border-radius: 2px;
+  color: $menu-panel-fg;
+}
+.menu-list a:hover {
+  background-color: whitesmoke;
+  color: $menu-hover; }
+.menu-list a.is-active {
+  background-color: $menu-active-bg;
+  color: $menu-active-fg; }
+.menu-list li ul {
+  border-left: 1px solid #dbdbdb;
+}
+
+.menu-label {
+  color: #000000;
+  font-size: 0.75em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase; }
+
+.menu-label:not(:first-child) {
+  margin-top: 1em; }
+
+.menu-label:not(:last-child) {
+  margin-bottom: 1em; }

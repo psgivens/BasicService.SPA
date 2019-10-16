@@ -2,8 +2,8 @@ import { select, takeEvery } from 'redux-saga/effects'
 import { call, put } from 'redux-saga/effects'
 import * as reducers from 'src/core/reducers'
 import { valuesApi } from '../apis/valuesApi'
-import * as infra from 'src/infra'
-import { AuthenticationState } from 'src/infra/authenticationReducers'
+import * as infra from 'src/shell/js'
+import { AuthenticationState } from 'src/shell/js/authenticationReducers'
 
 export type ValuesCommand = {
     type: "VALUES_DUMMY"

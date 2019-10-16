@@ -1,0 +1,44 @@
+@import "/src/shell/css/AppColors.css";
+@import "/src/shell/css/AppLargeScreens.css";
+
+
+/* 
+ * Common to large and small layouts
+ * * Font sizes
+ * * Text alignment
+ * * Logo sizes
+ */
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.blade-title {
+  padding: 5px;
+}
+
+a.navbar-link {
+  background: white;
+}
+
+#statusbar {
+  padding: 5px;
+}
+
+// @ - import "css/AppSmallScreens.css";
+

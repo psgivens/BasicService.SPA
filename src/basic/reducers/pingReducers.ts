@@ -20,6 +20,10 @@ export function pingReducers(state:PingState=initialState, action: PingEvent): P
             date: new Date (),
             values: action.values
         }
+        case "PING_FAILED": return {
+            date: new Date (),
+            values: action.message.split(' ')
+        }
 
         default: return state
     }

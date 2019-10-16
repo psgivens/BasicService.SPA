@@ -5,6 +5,11 @@ import './App.css';
 import { connectContainer } from './appComponent/appContainer'
 import * as container from  './appComponent/appContainer'
 
+import 'src/shell/css/App.css'
+
+// import  './App.css'
+
+
 type ThisProps = 
   container.StateProps
   & container.ConnectedDispatch
@@ -18,33 +23,43 @@ const onButtonPress = (action: ()=>void) => (event: React.SyntheticEvent<HTMLBut
 
 const App: React.FC<ThisProps> = ( props:ThisProps) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Reacts {props.counter!}          
-        </a>
-        <p>
-          {props.pingResult!.date.toString()}
-        </p>
-        <p>
-          {props.pingResult!.values.toString()}
-        </p>
+    <>
+      <div id='authenticated'>
+        <aside id="sidebar"> 
+        </aside>
+        <div className="appcontent">
+          <div className="App">
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <p>
+                Edit <code>src/App.tsx</code> and save to reload.
+              </p>
+              <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn Reacts {props.counter!}          
+              </a>
+              <p>
+                {props.pingResult!.date.toString()}
+              </p>
+              <p>
+                {props.pingResult!.values.toString()}
+              </p>
 
-      </header>
-      button:
-      <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
-      <button onClick={onButtonPress(props.ping!)} >Ping!</button>
-      <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
-    </div>
+            </header>
+          </div>
+        </div>
+      </div>
+      <aside id="statusbar">
+        <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
+        <button onClick={onButtonPress(props.causeError!)} >Ping Error!</button>
+        <button onClick={onButtonPress(props.ping!)} >Ping!</button>
+        <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
+      </aside>
+    </>
   );
 }
 

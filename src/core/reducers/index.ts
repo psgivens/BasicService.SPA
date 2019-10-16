@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { counterReducers } from 'src/basic/reducers/counterReducers'
 import { initialState as pingInitialState, pingReducers, PingState } from 'src/basic/reducers/pingReducers'
 
-import { authenticationReducer, AuthenticationState, createInitialState as createAuthState } from 'src/infra/authenticationReducers'
+import { authenticationReducer, AuthenticationState, createInitialState as createAuthState } from 'src/shell/js/authenticationReducers'
 
 export type All = {} & {
   auth: AuthenticationState
