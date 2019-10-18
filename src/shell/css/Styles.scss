@@ -1,6 +1,9 @@
-@import "/src/shell/css/AppColors.css";
-@import "/src/shell/css/AppLargeScreens.css";
+@import "./AppColors.css";
+@import "./AppLargeScreens.css";
 
+html {
+  background-color: blue;
+}
 
 /* 
  * Common to large and small layouts

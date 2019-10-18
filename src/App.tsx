@@ -1,9 +1,11 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'src/shell/css/Styles.css'
 
 import { connectContainer } from './appComponent/appContainer'
 import * as container from  './appComponent/appContainer'
+
 
 import 'src/shell/css/App.css'
 
@@ -26,9 +28,10 @@ const App: React.FC<ThisProps> = ( props:ThisProps) => {
     <>
       <div id='authenticated'>
         <aside id="sidebar"> 
+        This is a navbar
         </aside>
         <div className="appcontent">
-          <div className="App">
+          <div className="App blade">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
               <p>
@@ -46,7 +49,15 @@ const App: React.FC<ThisProps> = ( props:ThisProps) => {
                 {props.pingResult!.date.toString()}
               </p>
               <p>
-                {props.pingResult!.values.toString()}
+                <ul>
+                {props.pingResult!.values.map (value => {
+                  return (
+                    <li>
+                      {value}
+                    </li>
+                  )
+                })}
+                </ul>
               </p>
 
             </header>
