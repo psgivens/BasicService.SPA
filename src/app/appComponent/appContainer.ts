@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import * as redux from 'redux';
-import { CounterCommand, CounterCommands } from '../basic/actions/CounterSaga';
+import { CounterCommand, CounterCommands } from '../../basic/actions/CounterSaga';
 import * as state from 'src/core/reducers'
 // import { ValuesCommands } from 'src/basic/actions/ValuesSaga';
 import { PingCommands, PingCommand } from 'src/basic/actions/PingSaga';

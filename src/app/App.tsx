@@ -1,8 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
-import 'src/shell/css/sample.css'
-import './App.css';
-import 'src/shell/css/Styles.css'
+
+import { NavBar } from './NavBar';
+
+import 'src/skin/css/sample.css';
+import 'src/skin/css/AppColors.css';
+import 'src/skin/css/App.css';
+import 'src/skin/css/AppLargeScreens.css';
+import 'src/skin/css/AppSmallScreens.css';
 
 import { connectContainer } from './appComponent/appContainer'
 import * as container from './appComponent/appContainer'
@@ -24,27 +29,35 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
   return (
     <>
 
+      <NavBar />
 
-      <nav className="navbar" role="navigation" aria-label="main navigation">
-          <div className="navbar-brand">
-            
-              <a role="button" className="navbar-burger" href="/" aria-label="menu" aria-expanded="false" data-target="my-important-menu" >
-                  <span aria-hidden="true" />
-                  <span aria-hidden="true" />
-                  <span aria-hidden="true" />
-              </a>
-          </div>
-          <div className="navbar-menu" id="my-important-menu">
-              <div className="navbar-end"><a className="navbar-item" href="/">Home</a><a className="navbar-item" href="/Login">Login</a></div>
-          </div>
-      </nav>
+      {/* <nav className="navbar" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
 
-      <div id='authenticated'>
-        <aside id="sidebar">
+          <a role="button" className="navbar-burger" href="/" aria-label="menu" aria-expanded="false" data-target="my-important-menu" >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </a>
+        </div>
+        <div className="navbar-menu" id="my-important-menu">
+          <div className="navbar-end"><a className="navbar-item" href="/">Home</a><a className="navbar-item" href="/Login">Login</a></div>
+        </div>
+      </nav> */}
+
+      <div id='main'>
+        <aside id="sidebar1" className="sidebar" >
           This is a navbar
         </aside>
-        <div className="appcontent">
-          <div className="App blade">
+        <div className="App blade">
+          <div id="actionbar">
+            <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
+            <button onClick={onButtonPress(props.causeError!)} >Ping Error!</button>
+            <button onClick={onButtonPress(props.ping!)} >Ping!</button>
+            <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
+          </div>
+
+          <div className="blade-body">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
               <p>
@@ -76,12 +89,10 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
             </header>
           </div>
         </div>
+
       </div>
       <aside id="statusbar">
-        <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
-        <button onClick={onButtonPress(props.causeError!)} >Ping Error!</button>
-        <button onClick={onButtonPress(props.ping!)} >Ping!</button>
-        <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
+        No status at this time
       </aside>
     </>
   );
@@ -97,12 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($navbarBurgers.length > 0) {
 
     // Add a click event on each of them
-    $navbarBurgers.forEach( (el:any) => {
+    $navbarBurgers.forEach((el: any) => {
       el.addEventListener('click', () => {
 
         // Get the target from the "data-target" attribute
         const target = el.dataset.target;
-        const $target:any = document.getElementById(target);
+        const $target: any = document.getElementById(target);
 
         // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
         el.classList.toggle('is-active');
