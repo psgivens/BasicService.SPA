@@ -5,6 +5,7 @@ import Button from '../controls/Button';
 // import { ActionItem } from 'src/basic/actions/PingSaga';
 
 import * as container from './actionItemEditor/actionItemEditorContainer';
+import { ActionItem } from './actions/PingSaga';
 
 type ThisProps = 
   container.StateProps
@@ -74,6 +75,8 @@ class ActionItemEditor extends React.Component<ThisProps, ComponentState> {
     event.preventDefault()
     this.setState({ ...this.state, id:0, description: "" })
   }
+
+
 }
 
 export default container.connectContainer(ActionItemEditor)

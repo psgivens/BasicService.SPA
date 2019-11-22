@@ -12,7 +12,7 @@ import 'src/skin/css/AppSmallScreens.css';
 import { connectContainer } from './appComponent/appContainer'
 import * as container from './appComponent/appContainer'
 
-import ActionItemEditor from './ActionItemEditor';
+import ActionItemEditor from '../basic/ActionItemEditor';
 
 
 type ThisProps =
