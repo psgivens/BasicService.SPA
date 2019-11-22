@@ -55,6 +55,7 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
             <button onClick={onButtonPress(props.causeError!)} >Ping Error!</button>
             <button onClick={onButtonPress(props.ping!)} >Ping!</button>
             <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
+            <button onClick={onButtonPress(props.getActionItems!)} >Get Action Items!</button>
           </div>
 
           <div className="blade-body">
@@ -75,7 +76,7 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
                 {props.pingResult!.date.toString()}
               </p>
               <p>
-                <ul>
+                {/* <ul>
                   {props.pingResult!.values.map(value => {
                     return (
                       <li>
@@ -83,7 +84,21 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
                       </li>
                     )
                   })}
-                </ul>
+                </ul> */}
+              </p>
+              <p>
+                Action Items
+
+                {/* {props.pingResult!.actionItems} */}
+
+                  {props.pingResult!.actionItems.map(value => {
+                    return (
+                      <div key={value.id}>
+                        item
+                        {value.description}
+                      </div>
+                    )
+                  })}
               </p>
 
             </header>

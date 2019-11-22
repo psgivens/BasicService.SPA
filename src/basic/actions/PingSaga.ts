@@ -9,11 +9,14 @@ export type PingCommand = {
     type: "PING_AUTHCHECK"
 } | {
     type: "PING_CAUSEERROR"
+} | {
+    type: "PING_GETACTIONITEMS"
 }
 
 export const PingCommands = {
     ping: ():PingCommand => ({ type: "PING_PONG" }),
     causeError: ():PingCommand => ({ type: "PING_CAUSEERROR" }),
+    getActionItems: ():PingCommand => ({ type: "PING_GETACTIONITEMS"}),
     authCheck: ():PingCommand => ({ type: "PING_AUTHCHECK" })
 } 
 
@@ -26,6 +29,9 @@ export type PingEvent = {
 } | {
     type: "PING_AUTHCHECK_SUCCESS"
     values: string []
+} | {
+    type: "PING_ACTIONITEMS_SUCCESS"
+    values: any []
 }
 
 
@@ -40,6 +46,7 @@ export class PingSaga {
     public *saga(): Iterator<any> {
         yield takeEvery('PING_PONG', (command:PingCommand) => this.ping(command))
         yield takeEvery('PING_AUTHCHECK', (command:PingCommand) => this.authCheck(command))
+        yield takeEvery('PING_GETACTIONITEMS', (command:PingCommand) => this.getActionItems(command))
         yield takeEvery('PING_CAUSEERROR', (command:PingCommand) => this.causeError(command))
     }
 
@@ -91,4 +98,21 @@ export class PingSaga {
             } as PingEvent)
         }
     }
+
+    public *getActionItems(action: PingCommand){
+        const values = yield call(pingApi.getActionItems)
+
+        if (values) {
+            yield put( { 
+                type: "PING_ACTIONITEMS_SUCCESS",
+                values
+            } as PingEvent)
+        } else {
+            yield put( { 
+                type: "PING_FAILED",
+                message: "authCheck failed"
+            } as PingEvent)
+        }
+    }
+
 }

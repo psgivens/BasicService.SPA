@@ -17,6 +17,7 @@ export type StateProps = {} & {
 export type ConnectedDispatch = {} & {
     authCheck?: () => void
     causeError?: () => void
+    getActionItems?: () => void
     incrementCounter?:() => void
     ping?: () => void
 }
@@ -36,6 +37,7 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<CounterCommand | PingComman
     return {
         authCheck: () => dispatch(PingCommands.authCheck()),
         causeError: () => dispatch(PingCommands.causeError()),
+        getActionItems: () => dispatch(PingCommands.getActionItems()),
         incrementCounter: () => dispatch(CounterCommands.incrementCounter()),
         ping: () => dispatch(PingCommands.ping())
     }
