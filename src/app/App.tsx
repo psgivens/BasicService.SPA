@@ -24,7 +24,9 @@ const onButtonPress = (action: () => void) => (event: React.SyntheticEvent<HTMLB
   event.preventDefault()
   action()
 }
-
+const listingsStyle = {
+  width: '300px'
+}
 const App: React.FC<ThisProps> = (props: ThisProps) => {
   return (
     <>
@@ -49,6 +51,25 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
         <aside id="sidebar1" className="sidebar" >
           This is a navbar
         </aside>
+
+        <div className="blade" style={listingsStyle}>
+          <div className="blade-title">
+            Action Items
+          </div>
+          <div className="blade-body">
+
+            {props.pingResult!.actionItems.map(value => {
+              return (
+                <div key={value.id} className="list-item" >
+                  {value.description}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+
+
         <div className="App blade">
           <div id="actionbar">
             <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
@@ -76,7 +97,7 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
                 {props.pingResult!.date.toString()}
               </p>
               <p>
-                {/* <ul>
+                <ul>
                   {props.pingResult!.values.map(value => {
                     return (
                       <li>
@@ -84,21 +105,21 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
                       </li>
                     )
                   })}
-                </ul> */}
+                </ul>
               </p>
               <p>
                 Action Items
 
                 {/* {props.pingResult!.actionItems} */}
 
-                  {props.pingResult!.actionItems.map(value => {
-                    return (
-                      <div key={value.id}>
-                        item
+                {props.pingResult!.actionItems.map(value => {
+                  return (
+                    <div key={value.id}>
+                      item
                         {value.description}
-                      </div>
-                    )
-                  })}
+                    </div>
+                  )
+                })}
               </p>
 
             </header>
