@@ -1,9 +1,9 @@
-import { PingEvent } from '../actions/PingSaga'
+import { PingEvent, ActionItem } from '../actions/PingSaga'
 
 export type PingState = {} & {
     date: Date
     values: string []
-    actionItems: any []
+    actionItems: ActionItem []
 }
 
 export const initialState = {

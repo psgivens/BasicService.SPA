@@ -12,6 +12,7 @@ import 'src/skin/css/AppSmallScreens.css';
 import { connectContainer } from './appComponent/appContainer'
 import * as container from './appComponent/appContainer'
 
+import ActionItemEditor from './ActionItemEditor';
 
 
 type ThisProps =
@@ -68,8 +69,8 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
           </div>
         </div>
 
-
-
+        <ActionItemEditor />
+        
         <div className="App blade">
           <div id="actionbar">
             <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
@@ -78,7 +79,6 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
             <button onClick={onButtonPress(props.authCheck!)} >Auth Check!</button>
             <button onClick={onButtonPress(props.getActionItems!)} >Get Action Items!</button>
           </div>
-
           <div className="blade-body">
             <header className="App-header">
               <img src={logo} className="App-logo" alt="logo" />
@@ -121,11 +121,9 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
                   )
                 })}
               </p>
-
             </header>
           </div>
         </div>
-
       </div>
       <aside id="statusbar">
         No status at this time
