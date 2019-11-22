@@ -22,12 +22,16 @@ export type PingCommand = {
     type: "PING_CAUSEERROR"
 } | {
     type: "PING_GETACTIONITEMS"
+} | {
+    type: "PING_POSTACTIONITEM",
+    description: string
 }
 
 export const PingCommands = {
     ping: (): PingCommand => ({ type: "PING_PONG" }),
     causeError: (): PingCommand => ({ type: "PING_CAUSEERROR" }),
     getActionItems: (): PingCommand => ({ type: "PING_GETACTIONITEMS" }),
+    postActionItem: (description: string): PingCommand => ({ type: "PING_POSTACTIONITEM", description }),
     authCheck: (): PingCommand => ({ type: "PING_AUTHCHECK" })
 }
 
@@ -57,6 +61,7 @@ export class PingSaga {
         yield takeEvery('PING_PONG', (command: PingCommand) => this.ping(command))
         yield takeEvery('PING_AUTHCHECK', (command: PingCommand) => this.authCheck(command))
         yield takeEvery('PING_GETACTIONITEMS', (command: PingCommand) => this.getActionItems(command))
+        yield takeEvery('PING_POSTACTIONITEM', (command: PingCommand) => this.postActionItems(command))
         yield takeEvery('PING_CAUSEERROR', (command: PingCommand) => this.causeError(command))
     }
 
@@ -124,5 +129,37 @@ export class PingSaga {
             } as PingEvent)
         }
     }
+
+    public *postActionItems(action: PingCommand) {
+        if (action.type === "PING_POSTACTIONITEM") {
+            // const valuesx = 
+            yield call(pingApi.postActionItems,
+                {
+                    completionDate: undefined,
+                    description: action.description,
+                    dueDate: undefined,
+                    id: 0,
+                    modified: "",
+                    state: 0,
+                    tags: undefined,
+                    userId: ""
+                });
+
+            const values = yield call(pingApi.getActionItems)
+
+            if (values) {
+                yield put({
+                    type: "PING_ACTIONITEMS_SUCCESS",
+                    values
+                } as PingEvent)
+            } else {
+                yield put({
+                    type: "PING_FAILED",
+                    message: "authCheck failed"
+                } as PingEvent)
+            }
+        }
+    }
+
 
 }

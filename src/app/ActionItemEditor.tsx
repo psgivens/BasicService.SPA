@@ -2,7 +2,7 @@ import React from 'react';
 
 import TextInput from '../controls/TextInput';
 import Button from '../controls/Button';
-import { ActionItem } from 'src/basic/actions/PingSaga';
+// import { ActionItem } from 'src/basic/actions/PingSaga';
 
 import * as container from './actionItemEditor/actionItemEditorContainer';
 
@@ -12,14 +12,20 @@ type ThisProps =
   & container.AttributeProps
 
 type ComponentState = {} & {
-  actionItem: ActionItem 
+  id: number,
+  description: string
 }
 
 class ActionItemEditor extends React.Component<ThisProps, ComponentState> {
   constructor(props: ThisProps) {
     super(props)
+    this.state = {      
+        id: 0,
+        description: ""    
+    }
     this.onDescriptionChanged = this.onDescriptionChanged.bind(this)
     this.onSubmitPressed = this.onSubmitPressed.bind(this)
+    this.onClearPressed = this.onClearPressed.bind(this)
   }
 
   public render() {
@@ -32,59 +38,21 @@ class ActionItemEditor extends React.Component<ThisProps, ComponentState> {
           <div className="blade-body">
 
 
-            <TextInput
-              inputType="text"
-              label="Username"
-              name="username"
-              placeholder="Enter a value"
-              value={this.state.actionItem}
-              size={30}
-              onChange={this.onDescriptionChanged} />
-            <TextInput
-              inputType="password"
-              label="Password"
-              name="password"
-              placeholder="Enter a value"
-              value={this.state.password}
-              size={30}
-              onChange={this.onPasswordChanged} />
-            <Button onClick={this.onSubmitPressed} text="Login" />
-
-
-
-
-
-            <p>Id: {this.state.pomodoro.id}</p>
-            <Hidden
+            <p>Id: {this.state.id}</p>
+            {/* <Hidden
               name="id"
-              value={this.state.pomodoro.id} />
+              value={this.state.pomodoro.id} /> */}
             <TextInput
               inputType="text"
               label="Planned"
               name="planned"
               placeholder="Enter a value"
               size={50}
-              value={this.state.pomodoro.planned}
-              onChange={this.onPlannedChanged} />
-            <TextInput
-              inputType="text"
-              label="Actual"
-              name="actual"
-              placeholder="Enter a value"
-              size={50}
-              value={this.state.pomodoro.actual}
-              onChange={this.onActualChanged} />
+              value={this.state.description}
+              onChange={this.onDescriptionChanged} />
 
             <Button onClick={this.onSubmitPressed} text="Save" />
             <Button onClick={this.onClearPressed} text="Clear" />
-
-
-
-
-
-
-
-
 
           </div>
         </div>
@@ -94,41 +62,17 @@ class ActionItemEditor extends React.Component<ThisProps, ComponentState> {
 
   private onDescriptionChanged(event: React.SyntheticEvent<HTMLInputElement>) {
     event.preventDefault()
-    this.setState({ ...this.state, username: event.currentTarget.value })
-  }
-
-  private onPasswordChanged(event: React.SyntheticEvent<HTMLInputElement>) {
-    event.preventDefault()
-    this.setState({ ...this.state, password: event.currentTarget.value })
+    this.setState({ ...this.state, description: event.currentTarget.value })
   }
 
   private onSubmitPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault()
-    // this.props.login!({
-    //   password: this.state.password,
-    //   username: this.state.username
-    // });  
+    this.props.postActionItem!(this.state.description)
   }
 
-
-
-  private onPlannedChanged(event: React.SyntheticEvent<HTMLInputElement>) {
-    event.preventDefault()
-    this.setState({ ...this.state, pomodoro: { ...this.state.pomodoro, planned: event.currentTarget.value } })
-  }
-  private onActualChanged(event: React.SyntheticEvent<HTMLInputElement>) {
-    event.preventDefault()
-    this.setState({ ...this.state, pomodoro: { ...this.state.pomodoro, actual: event.currentTarget.value } })
-  }
-  private onSubmitPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
-    event.preventDefault()
-    this.props.addItem!(
-      { ...this.state.pomodoro }
-    )
-  }
   private onClearPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault()
-    this.setState({ ...this.state, pomodoro: emptyPomodoro })
+    this.setState({ ...this.state, id:0, description: "" })
   }
 }
 

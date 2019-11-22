@@ -70,6 +70,7 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
         </div>
 
         <ActionItemEditor />
+        
         <div className="App blade">
           <div id="actionbar">
             <button onClick={onButtonPress(props.incrementCounter!)} >Increment!</button>
