@@ -25,6 +25,12 @@ export type PingCommand = {
 } | {
     type: "PING_POSTACTIONITEM",
     description: string
+} | // Cheats: The following are named the same as PingEvents so that we can skip the saga. 
+{
+    type: "PING_ACTIONITEM_SELECTED",
+    actionItem: ActionItem
+} | {
+    type: "PING_ACTIONITEM_DESELECTED"
 }
 
 export const PingCommands = {
@@ -32,7 +38,14 @@ export const PingCommands = {
     causeError: (): PingCommand => ({ type: "PING_CAUSEERROR" }),
     getActionItems: (): PingCommand => ({ type: "PING_GETACTIONITEMS" }),
     postActionItem: (description: string): PingCommand => ({ type: "PING_POSTACTIONITEM", description }),
-    authCheck: (): PingCommand => ({ type: "PING_AUTHCHECK" })
+    authCheck: (): PingCommand => ({ type: "PING_AUTHCHECK" }),
+    
+    // Some actions are simple enough to skip the saga.
+    // Note: We are cheating by creating an Command with the same structure as an Event. This allows us to 
+    // post the message as a command in the component container, and respond to it like an event in the 
+    // reducers. 
+    selectActionItem: (actionItem: ActionItem): PingCommand => ({ type: "PING_ACTIONITEM_SELECTED", actionItem}),
+    deselectActionItem: (): PingCommand => ({ type: "PING_ACTIONITEM_DESELECTED" }),
 }
 
 export type PingEvent = {
@@ -47,6 +60,11 @@ export type PingEvent = {
 } | {
     type: "PING_ACTIONITEMS_SUCCESS"
     values: ActionItem[]
+} | {
+    type: "PING_ACTIONITEM_SELECTED",
+    actionItem: ActionItem
+} | {
+    type: "PING_ACTIONITEM_DESELECTED"
 }
 
 /************************ SAGA *********************/
@@ -160,6 +178,5 @@ export class PingSaga {
             }
         }
     }
-
 
 }

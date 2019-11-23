@@ -1,14 +1,12 @@
 import { combineReducers } from 'redux';
 import { counterReducers } from 'src/basic/reducers/counterReducers'
 import { initialState as pingInitialState, pingReducers, PingState } from 'src/basic/reducers/pingReducers'
-import { ActionItem } from '../../basic/actions/PingSaga'
 import { authenticationReducer, AuthenticationState, createInitialState as createAuthState } from 'src/shell/js/authenticationReducers'
 
 export type All = {} & {
   auth: AuthenticationState
   counter: number
   ping: PingState
-  selectedActionItem?: ActionItem
 }  
 
 export const initialState :All=  { 

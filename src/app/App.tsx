@@ -12,7 +12,9 @@ import 'src/skin/css/AppSmallScreens.css';
 import { connectContainer } from './appComponent/appContainer'
 import * as container from './appComponent/appContainer'
 
-import ActionItemEditor from './ActionItemEditor';
+import ActionItemEditor from '../basic/ActionItemEditor'
+
+import ActionItemListing from '../basic/ActionItemListing'
 
 
 type ThisProps =
@@ -25,9 +27,7 @@ const onButtonPress = (action: () => void) => (event: React.SyntheticEvent<HTMLB
   event.preventDefault()
   action()
 }
-const listingsStyle = {
-  width: '300px'
-}
+
 const App: React.FC<ThisProps> = (props: ThisProps) => {
   return (
     <>
@@ -53,21 +53,7 @@ const App: React.FC<ThisProps> = (props: ThisProps) => {
           This is a navbar
         </aside>
 
-        <div className="blade" style={listingsStyle}>
-          <div className="blade-title">
-            Action Items
-          </div>
-          <div className="blade-body">
-
-            {props.pingResult!.actionItems.map(value => {
-              return (
-                <div key={value.id} className="list-item" >
-                  {value.description}
-                </div>
-              )
-            })}
-          </div>
-        </div>
+        <ActionItemListing />
 
         <ActionItemEditor />
         

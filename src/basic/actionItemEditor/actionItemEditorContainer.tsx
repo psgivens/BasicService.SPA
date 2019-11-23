@@ -2,42 +2,36 @@
 import { connect } from 'react-redux';
 import * as redux from 'redux';
 import * as state from '../../core/reducers'
-import { PingCommands, PingCommand } from '../../basic/actions/PingSaga'  
+import { PingCommands, PingCommand, ActionItem } from '../actions/PingSaga'  
 
 export type AttributeProps = {} & {
 }
   
 export type StateProps = {} & {
-    // id: number
-    // description: string
+    selectedActionItem: ActionItem | void
 }
   
 export type ConnectedDispatch = {} & {
     postActionItem?: (description:string) => void
     getActionItems?: () => void
+    deselectItem?: () => void
 }
 
-// type internalState = {} & {
-//     counter: number
-//     values: string []
-//   }  
-  
+ 
 const mapStateToProps = (state1: state.All, ownProps: AttributeProps): StateProps => 
-    state1.selectedActionItem ? {
-        id: state1.selectedActionItem!.id,
-        description: state1.selectedActionItem!.description
-    } : {
-        id: 0,
-        description: ""
-    } 
+    ({
+        selectedActionItem: state1.ping.selectedItem
+    })
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<PingCommand>): ConnectedDispatch => {
     return {
         postActionItem: (description:string) => dispatch(PingCommands.postActionItem(description)),
-        getActionItems: () => dispatch(PingCommands.getActionItems())
+        getActionItems: () => dispatch(PingCommands.getActionItems()),
+        deselectItem: () => dispatch(PingCommands.deselectActionItem())
     }
 }    
 
 export const connectContainer = 
-    connect<{}, {}, AttributeProps, state.All>(mapStateToProps, mapDispatchToProps)
+    connect<StateProps, ConnectedDispatch, AttributeProps, state.All>(
+        mapStateToProps, mapDispatchToProps)
   
