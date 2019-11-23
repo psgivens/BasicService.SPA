@@ -8,30 +8,25 @@ export type AttributeProps = {} & {
 }
   
 export type StateProps = {} & {
-    selectedActionItem: ActionItem | void
+    actionItems?: ActionItem []
 }
   
 export type ConnectedDispatch = {} & {
-    postActionItem?: (description:string) => void
-    getActionItems?: () => void
-    deselectItem?: () => void
+    selectItem?: (item:ActionItem) => void
 }
 
  
 const mapStateToProps = (state1: state.All, ownProps: AttributeProps): StateProps => 
     ({
-        selectedActionItem: state1.ping.selectedItem
+        actionItems: state1.ping.actionItems
     })
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<PingCommand>): ConnectedDispatch => {
     return {
-        postActionItem: (description:string) => dispatch(PingCommands.postActionItem(description)),
-        getActionItems: () => dispatch(PingCommands.getActionItems()),
-        deselectItem: () => dispatch(PingCommands.deselectActionItem())
+        selectItem: (item:ActionItem) => dispatch(PingCommands.selectActionItem(item))
     }
 }    
 
 export const connectContainer = 
-    connect<StateProps, ConnectedDispatch, AttributeProps, state.All>(
-        mapStateToProps, mapDispatchToProps)
+    connect<{}, {}, AttributeProps, state.All>(mapStateToProps, mapDispatchToProps)
   

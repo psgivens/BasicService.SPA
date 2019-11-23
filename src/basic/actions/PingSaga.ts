@@ -25,9 +25,12 @@ export type PingCommand = {
 } | {
     type: "PING_POSTACTIONITEM",
     description: string
-} | {
-    type: "PING_SELECTACTIONITEM",
+} | // Cheats: The following are named the same as PingEvents so that we can skip the saga. 
+{
+    type: "PING_ACTIONITEM_SELECTED",
     actionItem: ActionItem
+} | {
+    type: "PING_ACTIONITEM_DESELECTED"
 }
 
 export const PingCommands = {
@@ -35,8 +38,14 @@ export const PingCommands = {
     causeError: (): PingCommand => ({ type: "PING_CAUSEERROR" }),
     getActionItems: (): PingCommand => ({ type: "PING_GETACTIONITEMS" }),
     postActionItem: (description: string): PingCommand => ({ type: "PING_POSTACTIONITEM", description }),
-    selectActionItem: (actionItem: ActionItem): PingCommand => ({ type: "PING_SELECTACTIONITEM", actionItem}),
-    authCheck: (): PingCommand => ({ type: "PING_AUTHCHECK" })
+    authCheck: (): PingCommand => ({ type: "PING_AUTHCHECK" }),
+    
+    // Some actions are simple enough to skip the saga.
+    // Note: We are cheating by creating an Command with the same structure as an Event. This allows us to 
+    // post the message as a command in the component container, and respond to it like an event in the 
+    // reducers. 
+    selectActionItem: (actionItem: ActionItem): PingCommand => ({ type: "PING_ACTIONITEM_SELECTED", actionItem}),
+    deselectActionItem: (): PingCommand => ({ type: "PING_ACTIONITEM_DESELECTED" }),
 }
 
 export type PingEvent = {
@@ -54,6 +63,8 @@ export type PingEvent = {
 } | {
     type: "PING_ACTIONITEM_SELECTED",
     actionItem: ActionItem
+} | {
+    type: "PING_ACTIONITEM_DESELECTED"
 }
 
 /************************ SAGA *********************/
@@ -69,7 +80,6 @@ export class PingSaga {
         yield takeEvery('PING_AUTHCHECK', (command: PingCommand) => this.authCheck(command))
         yield takeEvery('PING_GETACTIONITEMS', (command: PingCommand) => this.getActionItems(command))
         yield takeEvery('PING_POSTACTIONITEM', (command: PingCommand) => this.postActionItems(command))
-        yield takeEvery('PING_SELECTACTIONITEM', (command: PingCommand) => this.selectActionItem(command))
         yield takeEvery('PING_CAUSEERROR', (command: PingCommand) => this.causeError(command))
     }
 
@@ -166,15 +176,6 @@ export class PingSaga {
                     message: "authCheck failed"
                 } as PingEvent)
             }
-        }
-    }
-
-    public *selectActionItem(action: PingCommand) {
-        if (action.type === 'PING_SELECTACTIONITEM') {
-            yield put ({
-                type: 'PING_ACTIONITEM_SELECTED',
-                actionItem: action.actionItem
-            } as PingEvent)
         }
     }
 

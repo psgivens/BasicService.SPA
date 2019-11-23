@@ -40,6 +40,10 @@ export function pingReducers(state:PingState=initialState, action: PingEvent): P
             ...state,
             selectedItem: action.actionItem
         }
+        case "PING_ACTIONITEM_DESELECTED": return {
+            ...state,
+            selectedItem: undefined
+        }
 
         default: return state
     }
