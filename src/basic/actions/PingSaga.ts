@@ -14,6 +14,18 @@ export type ActionItem = {
     userId: string
 }
 
+export const emptyActionItem = {
+    completionDate: "",
+    description: "",
+    dueDate: "",
+    id: 0,
+    modified: "",
+    state: 0,
+    tags: "",
+    userId: ""
+}
+
+
 export type PingCommand = {
     type: "PING_PONG"
 } | {

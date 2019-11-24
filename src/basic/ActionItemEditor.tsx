@@ -5,7 +5,7 @@ import Button from '../controls/Button';
 // import { ActionItem } from 'src/basic/actions/PingSaga';
 
 import * as container from './actionItemEditor/actionItemEditorContainer';
-import { ActionItem } from './actions/PingSaga';
+import { ActionItem, emptyActionItem } from './actions/PingSaga';
 // import { ActionItem } from './actions/PingSaga';
 
 type ThisProps =
@@ -17,14 +17,15 @@ type ComponentState = {} & {
   item: ActionItem
 }
 
-// Mabye: https://alexzywiak.github.io/react-redux-with-typescript/index.html
+// TODO: Add this to documentation
+// This might help: https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
 
 class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
   constructor(props: ThisProps) {
     super(props)
     this.state = 
       {
-        item: props.selectedActionItem as ActionItem
+        item: { ...props.selectedActionItem } as ActionItem || emptyActionItem
       } 
     this.onDescriptionChanged = this.onDescriptionChanged.bind(this)
     this.onSubmitPressed = this.onSubmitPressed.bind(this)
@@ -32,12 +33,26 @@ class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
     this.onClosePressed = this.onClosePressed.bind(this)
   }
 
+  static getDerivedStateFromProps(props: ThisProps, state: ComponentState) {
+    // Any time the current user changes,
+    // Reset any parts of state that are tied to that user.
+    // In this simple example, that's just the email.
+    if (props.selectedActionItem && props.selectedActionItem!.id !== state.item.id) {
+      return { item: { ...props.selectedActionItem! } as ActionItem }
+    } else if (!props.selectedActionItem && state.item.id !== 0) {
+      return { item: emptyActionItem }
+    }
+    return null;
+  }
+
   public render() {
-    if (this.props.selectedActionItem) {
-      const selectedActionItem = this.props.selectedActionItem! as ActionItem
+    if (this.state.item.id !== 0) {
+      const selectedActionItem = this.state.item
       return (
-        <>
-          <div className="blade">
+          <div 
+            className="blade"
+            key={selectedActionItem.id}
+            >
             <div className="blade-title">
               Other
         </div>
@@ -63,7 +78,6 @@ class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
 
             </div>
           </div>
-        </>
       )
     } else {
       return (<></>);
@@ -82,7 +96,7 @@ class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
 
   private onClearPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault()
-    this.setState({ ...this.state, item: { ...this.state.item, description: "", id: 0 } })
+    this.setState({ ...this.state, item: { ...this.state.item, description: this.props.selectedActionItem ? this.props.selectedActionItem!.description : "" } })
   }
 
   private onClosePressed(event: React.SyntheticEvent<HTMLButtonElement>) {
