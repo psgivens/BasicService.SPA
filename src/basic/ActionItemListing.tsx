@@ -26,6 +26,7 @@ class ActionItemListing extends React.Component<ThisProps, ComponentState> {
   constructor(props: ThisProps) {
     super(props)
     this.onEdit = this.onEdit.bind(this)
+    this.onNewPressed = this.onNewPressed.bind(this)
   }
 
   public render() {
@@ -34,6 +35,7 @@ class ActionItemListing extends React.Component<ThisProps, ComponentState> {
         <div className="blade" style={listingsStyle}>
           <div className="blade-title">
             Action Items
+            <Button onClick={this.onNewPressed} text="( + )" />
           </div>
           <div className="blade-body">
 
@@ -56,6 +58,12 @@ class ActionItemListing extends React.Component<ThisProps, ComponentState> {
       event.preventDefault()
       this.props.selectItem!(item)
     }
+  }
+
+  private onNewPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
+    event.preventDefault()
+    this.setState({ ...this.state, isItemSelected: true })
+    this.props.newActionItem!()
   }
 }
 

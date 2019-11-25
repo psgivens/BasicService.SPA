@@ -14,19 +14,21 @@ type ThisProps =
   & container.AttributeProps
 
 type ComponentState = {} & {
-  item: ActionItem
+  item: ActionItem,
+  isItemSelected: boolean
 }
 
 // TODO: Add this to documentation
 // This might help: https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
 
-class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
+class ActionItemEditor extends React.Component<ThisProps, ComponentState> {
   constructor(props: ThisProps) {
     super(props)
-    this.state = 
+    this.state =
       {
-        item: { ...props.selectedActionItem } as ActionItem || emptyActionItem
-      } 
+        item: { ...props.selectedActionItem } as ActionItem || emptyActionItem,
+        isItemSelected: (props.selectedActionItem ? true : false)
+      }
     this.onDescriptionChanged = this.onDescriptionChanged.bind(this)
     this.onSubmitPressed = this.onSubmitPressed.bind(this)
     this.onClearPressed = this.onClearPressed.bind(this)
@@ -37,47 +39,53 @@ class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
     // Any time the current user changes,
     // Reset any parts of state that are tied to that user.
     // In this simple example, that's just the email.
-    if (props.selectedActionItem && props.selectedActionItem!.id !== state.item.id) {
-      return { item: { ...props.selectedActionItem! } as ActionItem }
-    } else if (!props.selectedActionItem && state.item.id !== 0) {
-      return { item: emptyActionItem }
+    if (props.selectedActionItem && (!state.isItemSelected || props.selectedActionItem.id !== state.item.id)) {
+      return {
+        item: { ...props.selectedActionItem } as ActionItem,
+        isItemSelected: true
+      }
+    } else if (!props.selectedActionItem && state.isItemSelected) {
+      return {
+        item: emptyActionItem,
+        isItemSelected: false
+      }
     }
     return null;
   }
 
   public render() {
-    if (this.state.item.id !== 0) {
+    if (this.state.isItemSelected) {
       const selectedActionItem = this.state.item
       return (
-          <div 
-            className="blade"
-            key={selectedActionItem.id}
-            >
-            <div className="blade-title">
-              Other
+        <div
+          className="blade"
+          // key={this.state.isItemSelected ? selectedActionItem.id : -1}
+        >
+          <div className="blade-title">
+            Item editor
         </div>
-            <div className="blade-body">
+          <div className="blade-body">
 
 
-              <p>Id: {selectedActionItem.id}</p>
-              {/* <Hidden
+            <p>Id: {selectedActionItem.id}</p>
+            {/* <Hidden
               name="id"
               value={this.state.pomodoro.id} /> */}
-              <TextInput
-                inputType="text"
-                label="Planned"
-                name="planned"
-                placeholder="Enter a value"
-                size={50}
-                value={selectedActionItem.description}
-                onChange={this.onDescriptionChanged} />
+            <TextInput
+              inputType="text"
+              label="Planned"
+              name="planned"
+              placeholder="Enter a value"
+              size={50}
+              value={selectedActionItem.description}
+              onChange={this.onDescriptionChanged} />
 
-              <Button onClick={this.onSubmitPressed} text="Save" />
-              <Button onClick={this.onClearPressed} text="Clear" />
-              <Button onClick={this.onClosePressed} text="X" />
+            <Button onClick={this.onSubmitPressed} text="Save" />
+            <Button onClick={this.onClearPressed} text="Clear" />
+            <Button onClick={this.onClosePressed} text="X" />
 
-            </div>
           </div>
+        </div>
       )
     } else {
       return (<></>);
@@ -91,18 +99,21 @@ class ActionItemEditor extends React.Component<ThisProps , ComponentState> {
 
   private onSubmitPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault()
-    this.props.postActionItem!(this.state.item.description)
+    this.props.postActionItem!(this.state.item)
   }
 
   private onClearPressed(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault()
-    this.setState({ ...this.state, item: { ...this.state.item, description: this.props.selectedActionItem ? this.props.selectedActionItem!.description : "" } })
+    this.setState({ ...this.state, item: { ...this.state.item, description: this.props.selectedActionItem ? this.props.selectedActionItem.description : "" } })
   }
 
   private onClosePressed(event: React.SyntheticEvent<HTMLButtonElement>) {
     event.preventDefault()
     this.props.deselectItem!()
+    this.setState({ ...this.state, item: emptyActionItem, isItemSelected: false })
   }
+
+
 
 
 }

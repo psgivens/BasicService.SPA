@@ -12,7 +12,7 @@ export type StateProps = {} & {
 }
   
 export type ConnectedDispatch = {} & {
-    postActionItem?: (description:string) => void
+    postActionItem?: (actionItem:ActionItem) => void
     getActionItems?: () => void
     deselectItem?: () => void
 }
@@ -25,9 +25,9 @@ const mapStateToProps = (state1: state.All, ownProps: AttributeProps): StateProp
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<PingCommand>): ConnectedDispatch => {
     return {
-        postActionItem: (description:string) => dispatch(PingCommands.postActionItem(description)),
+        postActionItem: (actionItem:ActionItem) => dispatch(PingCommands.postActionItem(actionItem)),
         getActionItems: () => dispatch(PingCommands.getActionItems()),
-        deselectItem: () => dispatch(PingCommands.deselectActionItem())
+        deselectItem: () => dispatch(PingCommands.deselectActionItem()),
     }
 }    
 

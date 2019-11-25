@@ -36,7 +36,7 @@ export type PingCommand = {
     type: "PING_GETACTIONITEMS"
 } | {
     type: "PING_POSTACTIONITEM",
-    description: string
+    item: ActionItem
 } | // Cheats: The following are named the same as PingEvents so that we can skip the saga. 
 {
     type: "PING_ACTIONITEM_SELECTED",
@@ -49,7 +49,7 @@ export const PingCommands = {
     ping: (): PingCommand => ({ type: "PING_PONG" }),
     causeError: (): PingCommand => ({ type: "PING_CAUSEERROR" }),
     getActionItems: (): PingCommand => ({ type: "PING_GETACTIONITEMS" }),
-    postActionItem: (description: string): PingCommand => ({ type: "PING_POSTACTIONITEM", description }),
+    postActionItem: (actionItem: ActionItem): PingCommand => ({ type: "PING_POSTACTIONITEM", item:actionItem }),
     authCheck: (): PingCommand => ({ type: "PING_AUTHCHECK" }),
     
     // Some actions are simple enough to skip the saga.
@@ -162,18 +162,32 @@ export class PingSaga {
 
     public *postActionItems(action: PingCommand) {
         if (action.type === "PING_POSTACTIONITEM") {
-            // const valuesx = 
-            yield call(pingApi.postActionItems,
-                {
-                    completionDate: undefined,
-                    description: action.description,
-                    dueDate: undefined,
-                    id: 0,
-                    modified: "",
-                    state: 0,
-                    tags: undefined,
-                    userId: ""
-                });
+            
+            if (action.item.id === 0) {
+                yield call(pingApi.postActionItems,
+                    {
+                        completionDate: undefined,
+                        description: action.item.description,
+                        dueDate: undefined,
+                        id: action.item.id,
+                        modified: "",
+                        state: 0,
+                        tags: undefined,
+                        userId: ""
+                    });
+            } else {
+                yield call(pingApi.putActionItems(action.item.id),
+                    {
+                        completionDate: undefined,
+                        description: action.item.description,
+                        dueDate: undefined,
+                        id: action.item.id,
+                        modified: "",
+                        state: 0,
+                        tags: undefined,
+                        userId: ""
+                    });
+            }
 
             const values = yield call(pingApi.getActionItems)
 
